@@ -1,16 +1,18 @@
 # 🔍 LogSight-AI
-
 ![Capstone](https://img.shields.io/badge/Project-Capstone-blueviolet?style=for-the-badge)
 ![Build](https://github.com/Trojan3877/LogSight-AI/actions/workflows/ci.yml/badge.svg?style=for-the-badge)
 ![Coverage](https://codecov.io/gh/Trojan3877/LogSight-AI/branch/main/graph/badge.svg?style=for-the-badge)
-![Dependabot](https://img.shields.io/github/dependabot/updates/Trojan3877/LogSight-AI?style=for-the-badge)
+![Publish](https://github.com/Trojan3877/LogSight-AI/actions/workflows/docker-publish.yml/badge.svg?style=for-the-badge)
 ![Container Scan](https://github.com/Trojan3877/LogSight-AI/actions/workflows/container-scan.yml/badge.svg?style=for-the-badge)
 ![Docs](https://img.shields.io/badge/Docs-GitHub%20Pages-informational?style=for-the-badge)
+![Telemetry](https://img.shields.io/badge/Telemetry-OTEL-green?style=for-the-badge)
+
 
 > **LogSight-AI**¹ ingests high-volume Kubernetes logs, embeds them with a C++ SIMD tokenizer, detects anomalies in real time via Python (HDBSCAN + isolation forest), and streams alerts to Snowflake for long-term forensics.  
 > Built for SRE & AIOps teams who need sub-second detection at <0.001 $/1000 logs.
 
 ---
+![image](https://github.com/user-attachments/assets/bb1292d3-22ed-4485-97ce-89c975707743)
 
 ## 📂 Repo Structure
 
