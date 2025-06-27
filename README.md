@@ -7,8 +7,13 @@
 ![Docs](https://img.shields.io/badge/Docs-GitHub%20Pages-informational?style=for-the-badge)
 ![Telemetry](https://img.shields.io/badge/Telemetry-OTEL-green?style=for-the-badge)
 
+![image](https://github.com/user-attachments/assets/682de1b8-d052-4b28-844e-7627b9d2c5e7)
 
-> **LogSight-AI**¹ ingests high-volume Kubernetes logs, embeds them with a C++ SIMD tokenizer, detects anomalies in real time via Python (HDBSCAN + isolation forest), and streams alerts to Snowflake for long-term forensics.  
+
+
+
+
+LogSight-AI¹ ingests high-volume Kubernetes logs, embeds them with a C++ SIMD tokenizer, detects anomalies in real time via Python (HDBSCAN + isolation forest), and streams alerts to Snowflake for long-term forensics.  
 > Built for SRE & AIOps teams who need sub-second detection at <0.001 $/1000 logs.
 
 ---
