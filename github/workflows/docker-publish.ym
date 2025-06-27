@@ -1,0 +1,24 @@
+name: Docker-Publish
+on:
+  push:
+    tags: ["v*.*.*"]
+permissions:
+  contents: read
+  packages: write
+  id-token: write
+env:
+  IMAGE: ghcr.io/${{ github.repository }}
+jobs:
+  build-sign-push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t $IMAGE:${GITHUB_REF##*/} .
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - run: docker push $IMAGE:${GITHUB_REF##*/}
+      - uses: sigstore/cosign-installer@v3
+      - run: cosign sign --yes $IMAGE:${GITHUB_REF##*/}
