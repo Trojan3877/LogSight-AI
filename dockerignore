@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+src/cpp/*.o
+bin/
+obj/
+coverage.*
+TestResults/
+docs/site/
+.DS_Store
+.git
