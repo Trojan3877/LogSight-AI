@@ -1,0 +1,15 @@
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.4.4
+    hooks: [id: ruff]
+  - repo: https://github.com/psf/black
+    rev: 24.4.2
+    hooks: [id: black]
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.4.0
+    hooks: [id: detect-secrets]
+  - repo: https://github.com/pre-commit/mirrors-clang-format
+    rev: v17.0.6
+    hooks:
+      - id: clang-format
+        files: \.(cpp|hpp)$
