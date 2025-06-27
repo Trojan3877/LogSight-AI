@@ -1,0 +1,51 @@
+name: Build-Test-Coverage
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1 ▸ Checkout ---------------------------------------------------------
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # 2 ▸ Compile SIMD tokenizer (C++) -------------------------------------
+      - name: ⚙️ Build C++ tokenizer
+        run: |
+          g++ -O3 -march=native -std=c++17 -fPIC -shared \
+              src/cpp/simd_tokenizer.cpp \
+              -o src/cpp/libtok.so
+
+      # 3 ▸ Python setup -----------------------------------------------------
+      - name: 🐍 Setup Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: 📦 Install Python deps
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest coverage grpcio-tools
+
+      # 4 ▸ Unit & integration tests + coverage ------------------------------
+      - name: 🧪 Run tests
+        run: |
+          coverage run -m pytest -q
+          coverage xml -o coverage.xml
+
+      # 5 ▸ Upload coverage to Codecov ---------------------------------------
+      - name: 📈 Upload coverage
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: coverage.xml
+          verbose: true
