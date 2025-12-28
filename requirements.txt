@@ -1,27 +1,5 @@
-# Core
-fastapi==0.111.0
-uvicorn[standard]==0.30.0
-grpcio==1.64.0
-grpcio-tools==1.64.0
-cffi==1.16.0
-aiofiles==23.2.1
-prometheus-client==0.20.0
-python-multipart==0.0.9
-
-# ML / Anomaly Detection
-hdbscan==0.8.33
-scikit-learn==1.5.0
-numpy==1.26.4
-scipy==1.13.1
-
-# OpenTelemetry (optional tracing)
-opentelemetry-sdk==1.24.0
-opentelemetry-exporter-otlp==1.24.0
-opentelemetry-instrumentation-fastapi==0.44b0
-
-# Snowflake Connector
-snowflake-connector-python==3.6.0
-
-# Testing
-pytest==8.2.0
-coverage==7.5.1
+kafka-python
+streamlit
+mlflow
+prometheus-client
+numpy
