@@ -1,74 +1,159 @@
-# 🔍 LogSight-AI
-![Capstone](https://img.shields.io/badge/Project-Capstone-blueviolet?style=for-the-badge)
-![Build](https://github.com/Trojan3877/LogSight-AI/actions/workflows/ci.yml/badge.svg?style=for-the-badge)
-![Coverage](https://codecov.io/gh/Trojan3877/LogSight-AI/branch/main/graph/badge.svg?style=for-the-badge)
-![Publish](https://github.com/Trojan3877/LogSight-AI/actions/workflows/docker-publish.yml/badge.svg?style=for-the-badge)
-![Container Scan](https://github.com/Trojan3877/LogSight-AI/actions/workflows/container-scan.yml/badge.svg?style=for-the-badge)
-![Docs](https://img.shields.io/badge/Docs-GitHub%20Pages-informational?style=for-the-badge)
-![Telemetry](https://img.shields.io/badge/Telemetry-OTEL-green?style=for-the-badge)
+<!-- Core Tech -->
+![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python)
+![Kafka](https://img.shields.io/badge/Kafka-Event%20Streaming-black?logo=apachekafka)
+![Transformer](https://img.shields.io/badge/AI-Transformer--Based-purple)
+![LLM](https://img.shields.io/badge/LLM-Claude--Compatible-orange)
+![MLflow](https://img.shields.io/badge/MLflow-Experiment%20Tracking-lightblue?logo=mlflow)
+![Prometheus](https://img.shields.io/badge/Observability-Prometheus-red?logo=prometheus)
+![Streamlit](https://img.shields.io/badge/UI-Streamlit-FF4B4B?logo=streamlit)
+![n8n](https://img.shields.io/badge/Automation-n8n-EA4B71?logo=n8n)
+![License](https://img.shields.io/badge/License-MIT-green)
 
-![image](https://github.com/user-attachments/assets/682de1b8-d052-4b28-844e-7627b9d2c5e7)
+<!-- Architecture -->
+![Event Driven](https://img.shields.io/badge/Architecture-Event--Driven-blueviolet)
+![Human in the Loop](https://img.shields.io/badge/Design-Human--in--the--Loop-success)
+![Observability First](https://img.shields.io/badge/Focus-Observability--First-critical)
+![Stars](https://img.shields.io/github/stars/Trojan3877/LogSight-AI?style=flat)
+![Forks](https://img.shields.io/github/forks/Trojan3877/LogSight-AI?style=flat)
+![Issues](https://img.shields.io/github/issues/Trojan3877/LogSight-AI)
+<!-- Portfolio Signal -->
+![L7 Quality](https://img.shields.io/badge/Engineering-L7--Quality-informational)
+![OpenAI Aligned](https://img.shields.io/badge/Aligned-OpenAI--Residency-black)
+LogSight-AI
+Transformer-Based Log Intelligence & Incident Reasoning System
+🧠 Overview
+LogSight-AI is a scalable, event-driven system that transforms high-volume system logs into actionable, explainable incident intelligence. Instead of treating logs as raw text, the system applies transformer-based embeddings and constrained LLM reasoning to surface summaries, incident clusters, and root-cause hypotheses—while preserving observability, traceability, and human oversight.
+This project focuses on judgment, system design, and reliability, not just model output.
+🎯 System Goals
+Reduce cognitive load from noisy logs
+Surface meaning, not just alerts
+Support human-in-the-loop decision-making
+Maintain transparency and observability
+Constrain LLM behavior intentionally
+
+flowchart LR
+    A[Log Sources] --> B[Kafka]
+    B --> C[Log Processing]
+    C --> D[Transformer Embeddings]
+    D --> E[LLM Reasoning<br/>Claude-Compatible]
+    E --> F[Incident Intelligence]
+    F --> G[Streamlit Dashboard]
+    E --> H[MLflow]
+    E --> I[Prometheus]
+    G --> J[n8n Workflows]
+
+🔌 Core Components
+Event Streaming
+Kafka (Docker) for real-time log ingestion
+Decouples producers from downstream analysis
+Semantic Processing
+Transformer-based embeddings for log representation
+Enables clustering and semantic similarity
+LLM Reasoning Layer
+Pluggable Claude-compatible interface
+Used for:
+Log summarization
+Incident explanation
+Root-cause hypotheses
+Explicitly constrained and partially mocked for clarity and safety
+Observability & Evaluation
+Prometheus for latency, throughput, and error metrics
+MLflow for prompt versions, experiments, and evaluation tracking
+Human Interface
+Streamlit dashboard for live summaries and confidence display
+n8n workflows for alerts and escalations
+⚡ Quickstart
+This quickstart runs LogSight-AI locally using Docker for Kafka and Python 3.11 for all services.
+LLM reasoning is Claude-compatible and mocked by default for clarity and safety.
+1️⃣ Prerequisites
+Make sure you have the following installed:
+Python 3.11
+Docker & Docker Compose
+Git
+Verify versions:
+
+Bash
+python --version
+docker --version
+docker compose version
+2️⃣ Clone the Repository
+
+Bash
+git clone https://github.com/Trojan3877/LogSight-AI.git
+cd LogSight-AI
+3️⃣ Start Kafka (Docker)
+This launches Kafka and Zookeeper locally.
+
+Bash
+docker compose up -d
+Confirm Kafka is running:
+
+Bash
+docker ps
+You should see kafka and zookeeper containers.
+4️⃣ Set Up Python Environment
+Create and activate a virtual environment:
+
+Bash
+python -m venv venv
+source venv/bin/activate  # macOS/Linux
+venv\Scripts\activate     # Windows
+Install dependencies:
+
+Bash
+pip install -r requirements.txt
+5️⃣ Start Streaming Logs
+In one terminal, run the Kafka log producer:
+
+Bash
+python ingestion/kafka_producer.py
+This simulates application logs being streamed into Kafka.
+6️⃣ Launch the Streamlit Dashboard
+In a second terminal:
+
+Bash
+streamlit run ui/streamlit_app.py
+Open your browser to:
+C
+
+http://localhost:8501
+You should see:
+Incident summary
+Root-cause hypothesis
+Confidence indicator
 
 
 
 
 
-LogSight-AI¹ ingests high-volume Kubernetes logs, embeds them with a C++ SIMD tokenizer, detects anomalies in real time via Python (HDBSCAN + isolation forest), and streams alerts to Snowflake for long-term forensics.  
-> Built for SRE & AIOps teams who need sub-second detection at <0.001 $/1000 logs.
-
----
-![image](https://github.com/user-attachments/assets/bb1292d3-22ed-4485-97ce-89c975707743)
-
-## 📂 Repo Structure
-
-LogSight-AI/
-├── src/
-│ ├── python/
-│ │ ├── collector.py # fluent-bit-style tailer → gRPC
-│ │ ├── anomaly.py # HDBSCAN clustering + isolation forest
-│ │ └── api.py # FastAPI alert endpoint + Prom metrics
-│ ├── cpp/
-│ │ ├── simd_tokenizer.cpp # ultra-fast log tokenization
-│ │ └── libtok.so
-├── infra/
-│ ├── helm/logsight/
-│ ├── ansible/blue_green.yml
-│ ├── terraform/eks/
-│ └── otel/otel-collector.yaml
-├── tests/
-│ └── test_anomaly.py
-├── Dockerfile
-└── docs/
-├── flowchart.png
-├── openapi.json
-└── grafana_dashboard.json
-
-
-[Flow-Chart](docs/flowchart.png)
-
-1. **Sidecar Collector** tails container logs → gRPC stream  
-2. **SIMD Tokenizer** (C++) splits & hashes tokens at &gt;1 GB/s  
-3. **Anomaly Engine** (Python) updates HDBSCAN clusters in memory  
-4. **Alerts API** exposes `/alerts` + Prometheus `/metrics`  
-5. **Snowflake Task** ingests alerts nightly for cost analytics  
-6. **Helm + Ansible** provide blue-green rollouts on EKS
-
----
-
-## 📊 Quantifiable KPIs
-
-| Metric | Target |
-|--------|--------|
-| **Throughput** | ≥ 50k logs/s per pod |
-| **Detection Latency (P95)** | &lt; 800 ms |
-| **False-Positive Rate** | &lt; 3 / 10k logs |
-| **CPU Utilization** | &lt; 60 % at target throughput |
-| **Cost / 1M logs** | &lt; 0.75 USD |
-
-Metrics exported via Prometheus and nightly aggregated in **Snowflake** (`LOGSIGHT.METRICS`).
 
 
 
 
-# LogSight-AI
-LogSight-AI is a real-time AIOps platform that ingests Kubernetes logs at > 50 k lines/sec, tokenizes them with a C++ SIMD engine, clusters patterns on-the-fly using HDBSCAN + Isolation Forest
+
+
+
+
+
+
+
+
+Design Questions & Reflections
+Q: Why use LLMs for log analysis at all?
+A: Logs often encode context and intent that rule-based systems miss. LLMs help summarize and reason over patterns, but only when constrained and observable.
+Q: Why not fully automate incident response?
+A: Automation without understanding is risky. This system prioritizes decision support over autonomous action.
+Q: What are the main trade-offs?
+A: Depth of reasoning versus latency, and flexibility versus predictability. The system favors clarity and trust over maximal automation.
+Q: Where does this system still fall short?
+A: LLM reasoning can still be brittle. That’s why outputs are treated as hypotheses, not truth.
+🚧 Limitations
+LLM outputs are non-deterministic
+Some components are mocked for scope clarity
+Not production-hardened for untrusted inputs
+🔮 Future Improvements
+Uncertainty-aware outputs
+Automated prompt evaluation suites
+Multi-model reasoning comparison
+Live retraining with feedback loops
+
