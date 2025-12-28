@@ -1,0 +1,13 @@
+{
+  "name": "LogSight Incident Workflow",
+  "nodes": [
+    {
+      "name": "Incident Trigger",
+      "type": "webhook"
+    },
+    {
+      "name": "Notify Slack",
+      "type": "slack"
+    }
+  ]
+}
