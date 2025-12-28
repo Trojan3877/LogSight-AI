@@ -1,0 +1,7 @@
+kafka:
+  topic: logs
+  bootstrap_servers: localhost:9092
+
+llm:
+  provider: claude-compatible
+  mode: mocked
