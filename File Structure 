@@ -5,18 +5,22 @@ LogSight-AI/
 │   └── log_parser.py
 ├── analysis/
 │   ├── transformer_model.py
-│   └── llm_interface.py
+│   ├── llm_interface.py
+│   └── clustering.py
 ├── orchestration/
-│   └── n8n_workflows/
+│   └── n8n/
+│       └── incident_workflow.json
 ├── observability/
 │   ├── prometheus_metrics.py
-│   └── dashboards/
+│   └── metrics.yaml
+├── experiments/
+│   └── mlflow_tracking.py
 ├── ui/
 │   └── streamlit_app.py
-├── experiments/
-│   └── mlflow_runs/
-├── docs/
-│   ├── architecture.md
-│   └── design_decisions.md
-├── README.md
+├── config/
+│   └── settings.yaml
+├── tests/
+│   └── test_pipeline.py
+├── docker-compose.yml
+├── requirements.txt
 └── LICENSE
