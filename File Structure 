@@ -1,0 +1,22 @@
+LogSight-AI/
+├── ingestion/
+│   └── kafka_producer.py
+├── processing/
+│   └── log_parser.py
+├── analysis/
+│   ├── transformer_model.py
+│   └── llm_interface.py
+├── orchestration/
+│   └── n8n_workflows/
+├── observability/
+│   ├── prometheus_metrics.py
+│   └── dashboards/
+├── ui/
+│   └── streamlit_app.py
+├── experiments/
+│   └── mlflow_runs/
+├── docs/
+│   ├── architecture.md
+│   └── design_decisions.md
+├── README.md
+└── LICENSE
