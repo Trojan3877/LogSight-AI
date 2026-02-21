@@ -1,0 +1,25 @@
+/logsight-ai
+├── README.md
+├── architecture.png
+├── benchmarks.md
+├── data/
+│   ├── sample_logs/
+│   └── processed_features/
+├── src/
+│   ├── ingestion.py
+│   ├── preprocessing.py
+│   ├── feature_extraction.py
+│   ├── model_training.py
+│   ├── inference.py
+│   └── utils.py
+├── notebooks/
+│   ├── EDA.ipynb
+│   └── Model Eval.ipynb
+├── tests/
+│   ├── test_preprocessing.py
+│   └── test_model.py
+├── requirements.txt
+├── Dockerfile
+├── .github/
+│   └── workflows/ci.yml
+└── metrics.md
