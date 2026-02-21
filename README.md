@@ -17,9 +17,8 @@ Scalable Log Anomaly Detection Platform | NLP | ML | Backend Systems | CI/CD
 
 
 
-LogSight-AI is a modular, production-oriented log anomaly detection platform designed to ingest, tokenize, and classify structured and unstructured system logs in near real-time.
 
-The system processes large volumes of log data, extracts meaningful features through optimized tokenization pipelines, and applies machine learning–based anomaly detection to identify abnormal patterns. It is architected with scalability, reproducibility, and deployment automation in mind.
+LogSight-AI is a full-stack anomaly detection platform that integrates a machine learning inference pipeline, REST API backend, and interactive dashboard for real-time operational log analysis.
 
 Key Results
 
@@ -282,6 +281,44 @@ System design maturity
 
 This project reflects AI engineering aligned with real-world AIOps use cases.
 
-
+Q1: Why did you separate inference logic from the Streamlit UI?
+Answer:
+Separation of concerns ensures that the ML logic can be reused by other interfaces (REST API, CLI tools, background workers) without coupling it to the presentation layer. It also improves testability and supports scalability.
+Q2: Why use classical ML instead of a transformer-based model?
+Answer:
+For operational log anomaly detection, inference speed and interpretability are critical. Classical models provide low latency and lower compute requirements while still achieving strong F1 performance. Transformer models would improve contextual understanding but increase latency and infrastructure complexity.
+Q3: What are the system bottlenecks?
+Answer:
+Primary bottlenecks include preprocessing (tokenization overhead) and batch inference latency. Optimizing preprocessing reduced ingestion overhead by 25%. Streaming mode would require async handling and backpressure management.
+Q4: How would you scale this system in production?
+Answer:
+I would:
+Decouple ingestion using Kafka
+Deploy inference as stateless microservices
+Introduce Redis for caching frequent anomaly patterns
+Add Prometheus for metrics collection
+Containerize via Docker and orchestrate with Kubernetes
+Q5: How do you handle false positives?
+Answer:
+Threshold tuning allows operators to balance precision vs recall. Severity classification provides additional prioritization to reduce alert fatigue.
+Q6: Why include clustering?
+Answer:
+Clustering allows exploration of anomaly groupings to identify systemic failure patterns rather than treating anomalies independently.
+Q7: What would you improve next?
+Answer:
+Replace synthetic model with contextual embedding-based log encoding
+Implement real-time streaming pipeline
+Add model drift detection
+Integrate persistent storage layer
+Add RBAC for dashboard access
+Q8: What demonstrates this is more than a demo?
+Answer:
+Measured latency
+Modular architecture
+Layer separation
+Unit test scaffolding
+CI/CD integration
+Containerized deployment
+The project is structured to be extended rather than rewritten.
 
 
