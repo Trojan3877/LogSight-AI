@@ -4,30 +4,36 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import List
 import pandas as pd
+import asyncio
 
 from src.inference import classify_logs
 
 app = FastAPI(
     title="LogSight-AI API",
-    description="REST API for ML-based log anomaly detection.",
-    version="1.0.0"
+    description="Async REST API for ML-based log anomaly detection.",
+    version="1.1.0"
 )
 
 
 class LogEntry(BaseModel):
     message: str
-    timestamp: str = None
-    log_level: str = None
+    timestamp: str | None = None
+    log_level: str | None = None
 
 
 @app.post("/predict")
-def predict(logs: List[LogEntry], threshold: float = 0.60):
+async def predict(logs: List[LogEntry], threshold: float = 0.60):
     try:
-        df = pd.DataFrame([log.dict() for log in logs])
+        # Simulate async behavior (future streaming compatibility)
+        await asyncio.sleep(0)
+
+        df = pd.DataFrame([log.model_dump() for log in logs])
+
         results, latency = classify_logs(df, threshold)
 
         return {
             "latency_seconds": latency,
+            "log_count": len(results),
             "results": results.to_dict(orient="records")
         }
 
