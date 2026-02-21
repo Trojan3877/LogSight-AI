@@ -1,137 +1,180 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
 import time
 from datetime import datetime
-from sklearn.metrics import classification_report
-import numpy as np
+from sklearn.cluster import KMeans
 
-# -----------------------------
+# ----------------------------------
 # CONFIG
-# -----------------------------
-st.set_page_config(
-    page_title="LogSight-AI Dashboard",
-    layout="wide"
-)
+# ----------------------------------
+st.set_page_config(page_title="LogSight-AI", layout="wide")
 
-st.title("🔍 LogSight-AI Anomaly Detection Dashboard")
+st.title("🔍 LogSight-AI Operational Dashboard")
 
-st.markdown(
-    """
-    Real-time log ingestion and anomaly detection platform.
-    Demonstrates ML-driven log classification with performance metrics and filtering.
-    """
-)
+st.markdown("""
+AI-driven log anomaly detection system with performance metrics,
+severity classification, clustering, and interactive monitoring.
+""")
 
-# -----------------------------
-# SIDEBAR CONTROLS
-# -----------------------------
-st.sidebar.header("⚙️ Controls")
+# ----------------------------------
+# SIDEBAR
+# ----------------------------------
+st.sidebar.header("⚙️ Configuration")
 
 uploaded_file = st.sidebar.file_uploader("Upload Log CSV", type=["csv"])
 
-confidence_threshold = st.sidebar.slider(
-    "Anomaly Confidence Threshold",
-    min_value=0.0,
-    max_value=1.0,
-    value=0.5,
-    step=0.05
+model_choice = st.sidebar.selectbox(
+    "Select Model",
+    ["Baseline Classifier", "Optimized Classifier", "Experimental Model"]
 )
 
-simulate_stream = st.sidebar.checkbox("Simulate Streaming Mode")
+confidence_threshold = st.sidebar.slider(
+    "Anomaly Confidence Threshold",
+    0.0, 1.0, 0.6, 0.05
+)
 
-# -----------------------------
-# MOCK MODEL (Replace with real inference)
-# -----------------------------
-def mock_model_predict(df):
+log_levels = st.sidebar.multiselect(
+    "Filter Log Level",
+    ["INFO", "WARN", "ERROR"],
+    default=["INFO", "WARN", "ERROR"]
+)
+
+simulate_stream = st.sidebar.checkbox("Simulate Streaming")
+
+# ----------------------------------
+# MOCK MODEL
+# Replace with real inference later
+# ----------------------------------
+def run_model(df):
     np.random.seed(42)
     df["anomaly_score"] = np.random.rand(len(df))
-    df["prediction"] = df["anomaly_score"].apply(
-        lambda x: 1 if x > confidence_threshold else 0
-    )
+    df["prediction"] = df["anomaly_score"] > confidence_threshold
+
+    # Severity tiers
+    def severity(score):
+        if score > 0.85:
+            return "CRITICAL"
+        elif score > 0.7:
+            return "HIGH"
+        elif score > 0.6:
+            return "MEDIUM"
+        else:
+            return "LOW"
+
+    df["severity"] = df["anomaly_score"].apply(severity)
     return df
 
-# -----------------------------
-# MAIN LOGIC
-# -----------------------------
+# ----------------------------------
+# MAIN
+# ----------------------------------
 if uploaded_file:
+
     df = pd.read_csv(uploaded_file)
 
-    st.subheader("📊 Raw Log Data")
+    # Simulate timestamp if missing
+    if "timestamp" not in df.columns:
+        df["timestamp"] = pd.date_range(
+            end=datetime.now(), periods=len(df), freq="S"
+        )
+
+    if "log_level" not in df.columns:
+        df["log_level"] = np.random.choice(
+            ["INFO", "WARN", "ERROR"], size=len(df)
+        )
+
+    df = df[df["log_level"].isin(log_levels)]
+
+    st.subheader("📄 Raw Logs")
     st.dataframe(df.head())
 
+    start_time = time.time()
+
     if simulate_stream:
-        st.subheader("📡 Streaming Simulation")
-
         placeholder = st.empty()
-        progress_bar = st.progress(0)
-
-        streamed_data = []
+        processed_rows = []
 
         for i in range(len(df)):
-            streamed_data.append(df.iloc[i])
-            partial_df = pd.DataFrame(streamed_data)
-
-            processed_df = mock_model_predict(partial_df)
+            processed_rows.append(df.iloc[i])
+            partial = pd.DataFrame(processed_rows)
+            result = run_model(partial)
 
             with placeholder.container():
-                st.dataframe(processed_df.tail(10))
+                st.dataframe(result.tail(5))
 
-            progress_bar.progress((i + 1) / len(df))
-            time.sleep(0.05)
+            time.sleep(0.02)
 
-        final_df = processed_df
-
+        final_df = result
     else:
-        final_df = mock_model_predict(df)
+        final_df = run_model(df)
 
-    # -----------------------------
-    # METRICS SECTION
-    # -----------------------------
-    st.subheader("📈 Detection Metrics")
+    latency = time.time() - start_time
+
+    # ----------------------------------
+    # METRICS PANEL (Prometheus-style)
+    # ----------------------------------
+    st.subheader("📊 System Metrics")
+
+    col1, col2, col3, col4 = st.columns(4)
 
     total_logs = len(final_df)
     anomalies = final_df["prediction"].sum()
     anomaly_rate = anomalies / total_logs
 
-    col1, col2, col3 = st.columns(3)
-
-    col1.metric("Total Logs Processed", total_logs)
-    col2.metric("Anomalies Detected", anomalies)
+    col1.metric("Logs Processed", total_logs)
+    col2.metric("Anomalies", anomalies)
     col3.metric("Anomaly Rate", f"{anomaly_rate:.2%}")
+    col4.metric("Processing Latency (sec)", f"{latency:.2f}")
 
-    # -----------------------------
-    # FILTERING
-    # -----------------------------
-    st.subheader("🔎 Filtered Results")
+    # ----------------------------------
+    # TIME SERIES VISUALIZATION
+    # ----------------------------------
+    st.subheader("📈 Time-Series Anomaly Trend")
 
-    show_anomalies_only = st.checkbox("Show Anomalies Only")
+    ts_data = final_df.set_index("timestamp")
+    st.line_chart(ts_data["anomaly_score"])
 
-    if show_anomalies_only:
-        display_df = final_df[final_df["prediction"] == 1]
+    # ----------------------------------
+    # FILTERED ANOMALIES
+    # ----------------------------------
+    st.subheader("🚨 Anomaly Table")
+
+    show_only_anomalies = st.checkbox("Show Anomalies Only")
+
+    if show_only_anomalies:
+        display_df = final_df[final_df["prediction"] == True]
     else:
         display_df = final_df
 
     st.dataframe(display_df)
 
-    # -----------------------------
-    # VISUALIZATION
-    # -----------------------------
-    st.subheader("📊 Anomaly Score Distribution")
+    # ----------------------------------
+    # EXPORT RESULTS
+    # ----------------------------------
+    st.subheader("⬇️ Export Results")
 
-    st.bar_chart(final_df["anomaly_score"])
-
-    # -----------------------------
-    # PERFORMANCE SUMMARY
-    # -----------------------------
-    st.subheader("⚡ Performance Summary")
-
-    st.markdown(
-        f"""
-        - Confidence Threshold: {confidence_threshold}
-        - Total Logs: {total_logs}
-        - Anomaly Rate: {anomaly_rate:.2%}
-        """
+    csv = display_df.to_csv(index=False).encode("utf-8")
+    st.download_button(
+        label="Download CSV",
+        data=csv,
+        file_name="logsight_results.csv",
+        mime="text/csv",
     )
 
+    # ----------------------------------
+    # CLUSTERING TAB
+    # ----------------------------------
+    st.subheader("🧠 Log Clustering (Semantic Grouping)")
+
+    cluster_count = st.slider("Number of Clusters", 2, 6, 3)
+
+    # Mock clustering using anomaly score
+    clustering_data = final_df[["anomaly_score"]]
+    kmeans = KMeans(n_clusters=cluster_count, random_state=42)
+    final_df["cluster"] = kmeans.fit_predict(clustering_data)
+
+    st.write("Cluster Distribution")
+    st.bar_chart(final_df["cluster"].value_counts())
+
 else:
-    st.info("Upload a CSV log file to begin analysis.")
+    st.info("Upload a CSV log file to begin.")
