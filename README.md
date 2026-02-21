@@ -168,6 +168,66 @@ Reduced redundant parsing
 Batch-based feature extraction
 
 
+Quick Start
+Clone the Repository
+Bash
+
+git clone https://github.com/Trojan3877/LogSight-AI.git
+cd LogSight-AI
+Create Virtual Environment (Recommended)
+Bash
+
+python -m venv venv
+source venv/bin/activate   # Mac/Linux
+venv\Scripts\activate      # Windows
+Install Dependencies
+Bash
+pip install -r requirements.txt
+Option A — Run the Streamlit Dashboard
+Bash
+
+streamlit run app/streamlit_app.py
+Open browser:
+
+
+http://localhost:8501
+Upload a CSV file containing:
+timestamp (optional)
+log_level (optional)
+message
+If missing, the system auto-generates them.
+Option B — Run the FastAPI Backend
+Bash
+
+uvicorn api.main:app --reload
+API Docs available at:
+
+
+http://localhost:8000/docs
+Example API Request (cURL)
+Bash
+
+curl -X POST "http://localhost:8000/predict" \
+-H "Content-Type: application/json" \
+-d '[{"message":"Error connecting to database"}]'
+Option C — Run with Docker
+Build image:
+Bash
+
+docker build -t logsight-ai .
+Run container:
+Bash
+
+docker run -p 8000:8000 logsight-ai
+Then visit:
+
+
+http://localhost:8000/docs
+Run Tests
+Bash
+
+pytest
+
 
 Scalability Considerations
 
