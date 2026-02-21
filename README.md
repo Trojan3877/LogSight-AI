@@ -9,6 +9,7 @@
 ![Scalable](https://img.shields.io/badge/Scalability-Batch%20Ready-brightgreen)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
+![LogSight-AI Architecture](architecture.png)
 
 LogSight-AI
 
