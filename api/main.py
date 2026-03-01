@@ -1,83 +1,76 @@
- # api/main.py
+"""
+Module: main.py
 
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
-from typing import List
+Purpose:
+--------
+Enterprise API layer for LogSight-AI.
+
+Responsibilities:
+- Accept log file uploads
+- Run anomaly detection pipeline
+- Return structured metrics
+- Support streaming endpoint
+
+Design Rationale:
+-----------------
+API-first design enables:
+- Frontend decoupling
+- Microservice deployment
+- Horizontal scaling
+
+Production Considerations:
+--------------------------
+- Add authentication
+- Add rate limiting
+- Add async processing
+"""
+
+from fastapi import FastAPI, UploadFile, File
 import pandas as pd
-import asyncio
-import json
-import hashlib
-
-from src.inference import classify_logs
-
-app = FastAPI()
-
-class LogEntry(BaseModel):
-    message: str
-    timestamp: str | None = None
-    log_level: str | None = None
+import numpy as np
+from core.ingestion import LogIngestionService
+from core.preprocessing import LogPreprocessor
+from core.anomaly_model import LogAnomalyDetector
+from core.metrics import compute_classification_metrics, measure_inference_latency
+from services.streaming import simulate_stream
 
 
-# -------------------------
-# CACHE
-# -------------------------
-cache_store = {}
-
-def generate_cache_key(payload: List[LogEntry], threshold: float):
-    raw = json.dumps([log.model_dump() for log in payload], sort_keys=True)
-    return hashlib.sha256((raw + str(threshold)).encode()).hexdigest()
+app = FastAPI(title="LogSight-AI API")
 
 
-# -------------------------
-# STANDARD PREDICTION
-# -------------------------
-@app.post("/predict")
-async def predict(logs: List[LogEntry], threshold: float = 0.60):
+@app.post("/analyze")
+async def analyze(file: UploadFile = File(...)):
+    ingestion = LogIngestionService()
+    preprocessor = LogPreprocessor()
+    model = LogAnomalyDetector()
 
-    cache_key = generate_cache_key(logs, threshold)
+    df = pd.read_csv(file.file)
 
-    if cache_key in cache_store:
-        return {
-            "cached": True,
-            **cache_store[cache_key]
-        }
+    df = ingestion._clean_dataframe(df)
+    features = preprocessor.transform(df)
 
-    df = pd.DataFrame([log.model_dump() for log in logs])
-    results, latency = classify_logs(df, threshold)
+    model.fit(features)
 
-    response = {
-        "cached": False,
-        "latency_seconds": latency,
-        "log_count": len(results),
-        "results": results.to_dict(orient="records")
-    }
+    predictions = model.detect_anomalies(features)
 
-    cache_store[cache_key] = response
-    return response
+    # Dummy ground truth (for demonstration)
+    y_true = np.zeros(len(predictions))
 
+    metrics = compute_classification_metrics(y_true, predictions)
 
-# -------------------------
-# STREAMING SIMULATION
-# ADD THIS SECTION BELOW
-# -------------------------
-@app.post("/stream")
-async def stream_predict(logs: List[LogEntry], threshold: float = 0.60):
-
-    streamed_results = []
-
-    for log in logs:
-        df = pd.DataFrame([log.model_dump()])
-        results, latency = classify_logs(df, threshold)
-
-        streamed_results.append({
-            "result": results.to_dict(orient="records"),
-            "latency": latency
-        })
-
-        await asyncio.sleep(0.05)
+    latency = measure_inference_latency(model, features)
 
     return {
-        "stream_mode": True,
-        "streamed_count": len(streamed_results),
-        "results": streamed_results
+        "metrics": metrics,
+        "latency_ms": latency
+    }
+
+
+@app.post("/stream")
+async def stream():
+    df = pd.read_csv("data/sample_logs.csv")
+    results = simulate_stream(df)
+
+    return {
+        "streaming_batches": results
     }
