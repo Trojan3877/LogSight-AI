@@ -1,8 +1,0 @@
-fastapi==0.110.0
-uvicorn==0.29.0
-streamlit==1.33.0
-pandas==2.2.2
-numpy==1.26.4
-scikit-learn==1.4.2
-python-multipart==0.0.9
-requests==2.31.0
