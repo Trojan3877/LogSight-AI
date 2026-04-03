@@ -1,0 +1,4 @@
+click>=8.1.7
+rich>=13.7.0
+scikit-learn>=1.4.0
+numpy>=1.26.0
