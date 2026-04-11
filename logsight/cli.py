@@ -126,5 +126,30 @@ def stdin_cmd(threshold: float) -> None:
     _print_report(report, show_anomalies=True)
 
 
+@main.command("health")
+def health_cmd() -> None:
+    """Verify that LogSight-AI is installed and operational."""
+    from logsight.analyzer import detect_anomalies
+    from logsight.parser import parse_line
+
+    sample = parse_line("INFO health check")
+    report = detect_anomalies([sample])
+    console.print("[bold green]✓ LogSight-AI is healthy.[/bold green]")
+    console.print(f"  version : [cyan]{_version()}[/cyan]")
+    console.print(f"  parsed  : [cyan]{sample.level.value}[/cyan] — {sample.message}")
+    console.print(f"  anomaly : [cyan]{report.has_anomalies}[/cyan]")
+
+
+def _version() -> str:
+    try:
+        from importlib.metadata import PackageNotFoundError, version
+
+        return version("logsight-ai")
+    except PackageNotFoundError:
+        from logsight import __version__
+
+        return __version__
+
+
 if __name__ == "__main__":
     main()
