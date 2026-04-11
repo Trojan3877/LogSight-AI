@@ -105,18 +105,105 @@ This project demonstrates:
 - End-to-end AIOps pipeline implementation  
 
 
- How to Run
+## 🚀 How to Run
 
-### Start Backend
+### Prerequisites
+
+- Python 3.9+
+- [Docker](https://docs.docker.com/get-docker/) (optional, for containerized runs)
+
+---
+
+### Local Installation
+
 ```bash
-uvicorn main:app --reload
-Run Dashboard
-streamlit run app.py
-📌 Future Improvements
-LLM-based log summarization
-Root cause analysis using AI agents
-Distributed log ingestion (Kafka integration)
-Advanced anomaly detection (transformers, LSTMs)
+# 1. Clone the repository
+git clone https://github.com/Trojan3877/LogSight-AI.git
+cd LogSight-AI
+
+# 2. (Recommended) Create and activate a virtual environment
+python -m venv .venv
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
+
+# 3. Install the package with all dependencies
+pip install -e ".[dev]"
+
+# 4. Verify the installation
+logsight health
+```
+
+### Analyse a Log File
+
+```bash
+# Analyse a local log file
+logsight analyze /var/log/syslog
+
+# Pipe logs from stdin
+cat app.log | logsight stdin
+
+# Adjust thresholds
+logsight analyze app.log --threshold 3.0 --window 200 --spike-threshold 0.3
+```
+
+---
+
+### Environment Variables
+
+Copy `.env.example` to `.env` and customise as needed:
+
+```bash
+cp .env.example .env
+```
+
+| Variable | Default | Description |
+|---|---|---|
+| `LOGSIGHT_THRESHOLD` | `2.5` | Z-score threshold for anomaly detection |
+| `LOGSIGHT_WINDOW` | `100` | Sliding-window size for spike detection |
+| `LOGSIGHT_SPIKE_THRESHOLD` | `0.25` | Error-rate fraction that constitutes a spike |
+
+---
+
+### Docker
+
+```bash
+# Build the image
+docker build -t logsight-ai:latest .
+
+# Verify the container starts correctly
+docker run --rm logsight-ai:latest health
+
+# Analyse a log file from the host
+docker run --rm \
+  -v /var/log:/logs:ro \
+  logsight-ai:latest analyze /logs/syslog
+```
+
+---
+
+### Running Tests
+
+```bash
+# Run the full test suite
+pytest
+
+# Run with coverage report
+pytest --cov=logsight --cov-report=term-missing
+```
+
+---
+
+### CI/CD
+
+GitHub Actions automatically runs linting and tests on every push and pull request (see `.github/workflows/ci.yml`).
+
+---
+
+## 📌 Future Improvements
+
+- LLM-based log summarization
+- Root cause analysis using AI agents
+- Distributed log ingestion (Kafka integration)
+- Advanced anomaly detection (transformers, LSTMs)
 
 
 
