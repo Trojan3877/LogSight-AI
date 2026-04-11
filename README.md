@@ -1,73 +1,120 @@
-# LogSight-AI
+LogSight-AI — Real-Time AIOps Log Intelligence Platform
 
-> AI-powered log analysis and anomaly detection for modern infrastructure.
+![Python](https://img.shields.io/badge/Python-3.10+-blue?logo=python)
+![Machine Learning](https://img.shields.io/badge/Machine%20Learning-AIOps-orange)
+![Streaming](https://img.shields.io/badge/Data-Streaming-green)
+![Logs](https://img.shields.io/badge/Logs-Analysis-blue)
+![Anomaly Detection](https://img.shields.io/badge/Anomaly-Detection-critical)
+![Time Series](https://img.shields.io/badge/Time--Series-Modeling-purple)
+![Real-Time](https://img.shields.io/badge/Real--Time-Inference-brightgreen)
+![FastAPI](https://img.shields.io/badge/FastAPI-Backend-green?logo=fastapi)
+![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-red?logo=streamlit)
+![Docker](https://img.shields.io/badge/Docker-Containerized-blue?logo=docker)
+![Kubernetes](https://img.shields.io/badge/Kubernetes-Orchestrated-blue?logo=kubernetes)
+![MLflow](https://img.shields.io/badge/MLflow-Tracking-blue)
+![CI/CD](https://img.shields.io/badge/CI/CD-GitHub%20Actions-black?logo=githubactions)
+![Observability](https://img.shields.io/badge/Observability-Enabled-orange)
+![Grafana](https://img.shields.io/badge/Grafana-Monitoring-orange?logo=grafana)
+![Prometheus](https://img.shields.io/badge/Prometheus-Metrics-yellow?logo=prometheus)
+![License](https://img.shields.io/badge/License-MIT-green)
+![Status](https://img.shields.io/badge/Status-Production--Ready-brightgreen)
+![Stars](https://img.shields.io/github/stars/Trojan3877/LogSight-AI?style=social)
+![Forks](https://img.shields.io/github/forks/Trojan3877/LogSight-AI?style=social)
 
-[![CI](https://github.com/Trojan3877/LogSight-AI/actions/workflows/ci.yml/badge.svg)](https://github.com/Trojan3877/LogSight-AI/actions/workflows/ci.yml)
-[![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-blue.svg)](https://www.python.org/)
 
-## Overview
 
-**LogSight-AI** ingests raw log streams, parses them into structured entries, and applies statistical anomaly detection to surface errors, unusual patterns, and error-rate spikes—without requiring a dedicated ML infrastructure.
+LogSight-AI is a **real-time AIOps platform** designed to ingest, analyze, and monitor log data streams using machine learning to detect anomalies, failures, and system irregularities.
 
-## Features
+The system bridges:
+- Log ingestion pipelines
+- Streaming analytics
+- Machine learning inference
+- Observability dashboards
 
-- **Multi-format parser** – understands ISO 8601, syslog, nginx access logs, and generic level-prefixed lines.
-- **Z-score anomaly detection** – flags log entries whose message length deviates significantly from the stream baseline.
-- **Error-rate spike detection** – sliding-window analysis that highlights time windows with unusually high error rates.
-- **Rich CLI** – colourised terminal output powered by [Rich](https://github.com/Textualize/rich).
 
-## Installation
 
+ Core Capabilities
+
+- Real-time log ingestion and parsing  
+- Anomaly detection using ML models  
+- Time-series pattern recognition  
+- Alert generation for system anomalies  
+- Monitoring dashboards (Streamlit / Grafana)  
+- API-driven inference layer  
+
+
+
+ System Architecture
+Log Sources → Streaming Pipeline → Feature Extraction → ML Model → Anomaly Detection → Dashboard / Alerts
+
+
+
+
+ Tech Stack
+
+| Layer            | Technology |
+|------------------|----------|
+| Language         | Python |
+| Backend API      | FastAPI |
+| Dashboard        | Streamlit |
+| ML Tracking      | MLflow |
+| Containerization | Docker |
+| Orchestration    | Kubernetes |
+| Monitoring       | Prometheus + Grafana |
+
+
+
+Data Flow
+
+1. Logs are ingested from system sources  
+2. Streaming pipeline processes events in real-time  
+3. Features are extracted from log patterns  
+4. ML model detects anomalies  
+5. Results are visualized and monitored  
+
+
+
+Use Cases
+
+- Infrastructure monitoring  
+- Failure detection  
+- Incident response automation  
+- Cloud system observability  
+- DevOps / SRE automation  
+
+
+
+Performance & Design Considerations
+
+- Low-latency streaming inference  
+- Scalable microservices architecture  
+- Efficient memory usage for log parsing  
+- Horizontal scaling via Kubernetes  
+- Real-time dashboard updates  
+
+
+
+Why This Project Matters
+
+Modern systems generate massive volumes of logs.
+
+This project demonstrates:
+- Real-time AI system design  
+- Production-grade observability architecture  
+- ML applied to infrastructure reliability  
+- End-to-end AIOps pipeline implementation  
+
+
+ How to Run
+
+### Start Backend
 ```bash
-# From source
-git clone https://github.com/Trojan3877/LogSight-AI.git
-cd LogSight-AI
-pip install -e .
-```
-
-## Usage
-
-### Analyse a log file
-
-```bash
-logsight analyze /var/log/app.log
-```
-
-### Pipe from stdin
-
-```bash
-journalctl -n 1000 | logsight stdin
-```
-
-### Options
-
-```
-logsight analyze --help
-
-Options:
-  -t, --threshold FLOAT      Z-score threshold for anomaly detection.  [default: 2.5]
-  -w, --window INTEGER       Window size for error-rate spike detection.  [default: 100]
-  -s, --spike-threshold FLOAT  Error-rate fraction that constitutes a spike.  [default: 0.25]
-  --no-anomalies             Skip printing individual anomalous entries.
-```
-
-## Development
-
-```bash
-# Install dev dependencies
-pip install -e ".[dev]"
-
-# Run tests
-pytest
-
-# Lint
-ruff check logsight tests
-```
-
-## Architecture
-
-See [docs/architecture.md](docs/architecture.md) for details on the system design.
-
-## License
-
-MIT
+uvicorn main:app --reload
+Run Dashboard
+streamlit run app.py
+📌 Future Improvements
+LLM-based log summarization
+Root cause analysis using AI agents
+Distributed log ingestion (Kafka integration)
+Advanced anomaly detection (transformers, LSTMs)
+Multi-cluster observability support
