@@ -1,11 +1,14 @@
 # ⚡ LogSight-AI: Real-Time Intelligent Log Analytics Engine
+<!-- CI/CD, Governance & Testing Security Metrics -->
+[![Build and Test Pipeline](https://github.com/Trojan3877/LogSight-AI/actions/workflows/ci.yml/badge.svg)](https://github.com/Trojan3877/LogSight-AI/actions)
+[![Code Style: Black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)](https://github.com/psf/black)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
+<!-- Core System Language & Runtime Infrastructure Frameworks -->
 [![C++](https://img.shields.io/badge/Language-C%2B%2B17-blue?logo=cplusplus&logoColor=white&style=flat-square)](https://github.com/Trojan3877/LogSight-AI)
 [![Python](https://img.shields.io/badge/Language-Python%203.10-3776AB?logo=python&logoColor=white&style=flat-square)](https://github.com/Trojan3877/LogSight-AI)
 [![Docker Engine](https://img.shields.io/badge/Container-Docker%20Compose-2496ED?logo=docker&logoColor=white&style=flat-square)](https://github.com/Trojan3877/LogSight-AI)
 [![Streamlit UI](https://img.shields.io/badge/UI-Streamlit-FF4B4B?logo=streamlit&logoColor=white&style=flat-square)](https://github.com/Trojan3877/LogSight-AI)
-[![License-MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](https://opensource.org/licenses/MIT)
-[![Build and Test Pipeline](https://github.com/Trojan3877/LogSight-AI/actions/workflows/ci.yml/badge.svg)](https://github.com/Trojan3877/LogSight-AI/actions)
 
 LogSight-AI is a high-throughput AIOps log parsing and anomaly detection engine designed to monitor massive distributed applications, like Kubernetes clusters, with minimal latency. 
 
