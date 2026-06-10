@@ -3,7 +3,7 @@
 [![Build and Test Pipeline](https://github.com/Trojan3877/LogSight-AI/actions/workflows/ci.yml/badge.svg)](https://github.com/Trojan3877/LogSight-AI/actions)
 [![Code Style: Black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)](https://github.com/psf/black)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
-
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/trojan3877/logsight-ai/main/demo_app.py)
 <!-- Core System Language & Runtime Infrastructure Frameworks -->
 [![C++](https://img.shields.io/badge/Language-C%2B%2B17-blue?logo=cplusplus&logoColor=white&style=flat-square)](https://github.com/Trojan3877/LogSight-AI)
 [![Python](https://img.shields.io/badge/Language-Python%203.10-3776AB?logo=python&logoColor=white&style=flat-square)](https://github.com/Trojan3877/LogSight-AI)
