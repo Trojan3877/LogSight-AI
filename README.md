@@ -14,6 +14,32 @@ LogSight-AI is a high-throughput AIOps log parsing and anomaly detection engine 
 
 By marrying lower-level **C++ SIMD-accelerated tokenization** with high-level **Machine Learning clustering models (HDBSCAN & Isolation Forests)**, the system processes live infrastructure streams, structures raw text data on the fly, and flags structural and frequency variations in real-time.
 
+architecture-beta
+    group api[API Gateway & Auth]
+    group ingest[Event Ingestion & Streaming]
+    group compute[Real-Time Matching & Analytics]
+    group storage[Data Persistence & Cache]
+
+    service gateway(server)[API Gateway] in api
+    service web(internet)[Client Apps]
+
+    service kafka(queue)[Apache Kafka] in ingest
+    service redis(database)[Redis Geo-Index] in storage
+
+    service matching(server)[Matching Service] in compute
+    service telemetry(server)[Telemetry Processor] in compute
+
+    service db(database)[PostgreSQL] in storage
+
+    web:R --> L:gateway
+    gateway:R --> L:kafka
+    
+    kafka:B --> T:telemetry
+    kafka:R --> L:matching
+
+    telemetry:R --> L:redis
+    matching:B --> T:redis
+    matching:R --> L:db
 
 
 System Architecture
