@@ -3,6 +3,7 @@
 ![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-3776AB?style=flat-square&logo=python&logoColor=white)
 ![Code Coverage](https://img.shields.io/badge/coverage-94%25-059669?style=flat-square&logo=pytest&logoColor=white)
 ![Code Style](https://img.shields.io/badge/code%20style-black-000000?style=flat-square)
+[![Build Status](https://github.com/Trojan3877/LogSight-AI/actions/workflows/main.yml/badge.svg)](https://github.com/Trojan3877/LogSight-AI/actions)
 
 <!-- Frameworks & Security -->
 ![UI Layer](https://img.shields.io/badge/UI-Streamlit-FF4B4B?style=flat-square&logo=streamlit&logoColor=white)
