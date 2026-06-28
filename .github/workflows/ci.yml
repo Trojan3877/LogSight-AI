@@ -9,7 +9,7 @@ on:
 jobs:
   quality-gate:
     name: Code Quality & Security Scans
-    runs-on: ubuntu-latest
+    runs-on: black --check .
 
     steps:
     - name: Checkout Code Repository
