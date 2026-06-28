@@ -20,7 +20,7 @@
 LogSight-AI: Enterprise Multi-Agent Observability & Telemetry System
 LogSight-AI is a fault-tolerant, production-grade AI observability pipeline that ingests chaotic, unstructured system logs, serializes them into predictable data schemas, and conducts structural root-cause analysis.
 Unlike basic single-prompt wrapper scripts that suffer from token-burn loops and unpredictable outputs, LogSight-AI implements **Sandipan Bhaumik’s production agent orchestration patterns**: separating execution layers into specialized sub-agents managed via **Immutable State Management** and isolated by an active **Execution Circuit Breaker**.
-## 🏗️ System Architecture & Data Flow
+ System Architecture & Data Flow
 LogSight-AI decouples specialized skills into dedicated worker layers, enforcing deterministic bounds across the processing lifecycle.
 ### Deterministic System Execution Flow
 The processing lifecycle follows a unidirectional, structured pipeline to ensure predictable inputs and outputs at every layer:
@@ -54,7 +54,7 @@ The processing lifecycle follows a unidirectional, structured pipeline to ensure
  1. **The Core Four Model:** Every worker is explicitly configured with decoupled system instructions, isolated parameter inputs, structural schema requirements, and a dedicated role context.
  2. **State Immutability:** State changes are achieved by generating explicit copies of the runtime history object, providing a clean trace for deep system observability.
  3. **Fault Isolation:** Malformed strings, JSON parser validation faults, or unhandled exceptions trip defensive thresholds, safely degrading performance to preserve upstream uptime.
-## 📊 System Performance & Operational Benchmarks
+System Performance & Operational Benchmarks
 The multi-agent design delivers measurable performance improvements over typical single-stage LLM chains when parsing complex telemetry payloads:
 | Operational Dimension | Legacy Single-Chain LLM Wrapper | Upgraded Multi-Agent Pipeline | Impact Metric |
 |---|---|---|---|
