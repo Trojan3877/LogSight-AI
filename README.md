@@ -1,6 +1,6 @@
 <p align="left">
   <a href="https://github.com/Trojan3877/LogSight-AI/actions">
-    <img src="https://img.shields.io/github/actions/workflow/status/Trojan3877/LogSight-AI/cl.yml?branch=main&style=flat-square&logo=github-actions&logoColor=white&label=build&v=3" alt="Build Status">
+    <img src="https://img.shields.io/github/actions/workflow/status/Trojan3877/LogSight-AI/ci.yml?branch=main&style=flat-square&logo=github-actions&logoColor=white&label=build&v=4" alt="Build Status">
   </a>
   <img src="https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python Version">
   <img src="https://img.shields.io/badge/coverage-94%25-059669?style=flat-square&logo=pytest&logoColor=white" alt="Code Coverage">
