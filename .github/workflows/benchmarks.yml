@@ -1,0 +1,27 @@
+name: Performance Benchmarking
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  benchmark:
+    name: Core Engine Latency Tracking
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 📦 Install Profiling Tools
+        run: |
+          pip install pytest-benchmark
+
+      - name: ⏱️ Profile Code Execution Speeds
+        run: |
+          # Executes performance profiles on analytical processing functions
+          pytest tests/ --benchmark-only --benchmark-json=benchmark_report.json
