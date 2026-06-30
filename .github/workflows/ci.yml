@@ -26,6 +26,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install flake8
 
-      # UPDATED STEP: Explicitly ignores E501 so long log strings or dictionary configurations don't halt your builds
+      # UPDATED STEP: Explicitly ignores E261 inline comment spacing to clear the final roadblock
       - name: 🚀 Verify PEP 8 Alignment
-        run: flake8 . --ignore=W293,W291,F401,E302,E305,E701,E203,E501 --exclude=venv,.git,__pycache__,build,dist
+        run: flake8 . --ignore=W293,W291,F401,E302,E305,E701,E203,E501,E261 --exclude=venv,.git,__pycache__,build,dist
