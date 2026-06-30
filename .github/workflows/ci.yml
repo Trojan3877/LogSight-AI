@@ -26,5 +26,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install flake8
 
+      # CRITICAL FIX: Points to workspace root while excluding metadata and dependency directories
       - name: 🚀 Verify PEP 8 Alignment (120 Characters Max)
-        run: flake8 src/ tests/ --max-line-length=120 --ignore=W293,F401
+        run: flake8 . --max-line-length=120 --ignore=W293,F401 --exclude=venv,.git,__pycache__,build,dist
