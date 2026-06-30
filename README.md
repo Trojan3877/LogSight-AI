@@ -20,6 +20,9 @@
 [![Code Quality Assurance](https://github.com/Trojan3877/LogSight-AI/actions/workflows/ci.yml/badge.svg)](https://github.com/Trojan3877/LogSight-AI/actions/workflows/ci.yml)
 [![Security Analysis](https://github.com/Trojan3877/LogSight-AI/actions/workflows/security.yml/badge.svg)](https://github.com/Trojan3877/LogSight-AI/actions/workflows/security.yml)
 [![Automated Release](https://github.com/Trojan3877/LogSight-AI/actions/workflows/release.yml/badge.svg)](https://github.com/Trojan3877/LogSight-AI/actions/workflows/release.yml)
+[![Continuous Integration](https://github.com/Trojan3877/LogSight-AI/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/Trojan3877/LogSight-AI/actions/workflows/ci-cd.yml)
+[![Performance Benchmarking](https://github.com/Trojan3877/LogSight-AI/actions/workflows/benchmarks.yml/badge.svg)](https://github.com/Trojan3877/LogSight-AI/actions/workflows/benchmarks.yml)
+[![SAST Code Security](https://github.com/Trojan3877/LogSight-AI/actions/workflows/sast.yml/badge.svg)](https://github.com/Trojan3877/LogSight-AI/actions/workflows/sast.yml)
 
 LogSight-AI: Enterprise Multi-Agent Observability & Telemetry System
 LogSight-AI is a fault-tolerant, production-grade AI observability pipeline that ingests chaotic, unstructured system logs, serializes them into predictable data schemas, and conducts structural root-cause analysis.
