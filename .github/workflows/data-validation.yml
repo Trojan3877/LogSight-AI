@@ -1,0 +1,29 @@
+name: Ingestion Schema Validation
+
+on:
+  push:
+    branches: [ main ]
+  schedule:
+    - cron: '0 12 * * *' # Automated health validation audit every single day
+
+jobs:
+  schema-check:
+    name: Verify Log Data Contracts
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 📦 Install Data Integrity Frameworks
+        run: |
+          pip install pydantic great_expectations
+
+      - name: 🧬 Audit Ingestion Model Integrity
+        run: |
+          # Validates structural data typing rules across mock streaming log test files
+          python -m pytest tests/test_schema_contracts.py
