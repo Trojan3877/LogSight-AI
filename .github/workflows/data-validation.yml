@@ -3,8 +3,10 @@ name: Ingestion Schema Validation
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
   schedule:
-    - cron: '0 12 * * *' # Automated health validation audit every single day
+    - cron: '0 12 * * *'
 
 jobs:
   schema-check:
@@ -18,12 +20,14 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+          cache: 'pip'
 
+      # FIXED STEP: Explicitly adds pytest alongside validation tools
       - name: 📦 Install Data Integrity Frameworks
         run: |
-          pip install pydantic great_expectations
+          python -m pip install --upgrade pip
+          pip install pydantic great_expectations pytest
 
       - name: 🧬 Audit Ingestion Model Integrity
         run: |
-          # Validates structural data typing rules across mock streaming log test files
           python -m pytest tests/test_schema_contracts.py
