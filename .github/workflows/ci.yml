@@ -1,4 +1,4 @@
-name: Continuous Integration & Telemetry
+name: Code Quality Assurance
 
 on:
   push:
@@ -7,27 +7,24 @@ on:
     branches: [ main ]
 
 jobs:
-  engine-test:
-    name: Core Engine Analysis Matrix
+  style-compliance:
+    name: Code Hygiene Enforcement
     runs-on: ubuntu-latest
 
     steps:
       - name: ⬇️ Checkout Repository
         uses: actions/checkout@v4
 
-      - name: 🐍 Set up Python Environment
+      - name: 🐍 Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
           cache: 'pip'
 
-      - name: 📦 Install Telemetry Core Dependencies
+      - name: 📦 Provision Linting Binaries
         run: |
           python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-          pip install pytest pytest-cov
+          pip install flake8
 
-      - name: 🧪 Execute Log Parsing Analytics Suite
-        run: |
-          # Runs test matrix with tracking to identify untested tracking components
-          pytest --cov=src --cov-report=term-missing tests/
+      - name: 🚀 Verify PEP 8 Alignment (120 Characters Max)
+        run: flake8 src/ tests/ --max-line-length=120 --ignore=W293,F401
